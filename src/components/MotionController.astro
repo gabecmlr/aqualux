@@ -164,7 +164,7 @@
     };
 
     const localAnchorLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(
-      '[data-navigation] a[href*="#"], .footer__links a[href*="#"], .brand[href*="#"], .hero a[href^="#"]',
+      '[data-navigation] a[href*="#"], [data-mobile-actions] a[href*="#"], .footer__links a[href*="#"], .brand[href*="#"], .hero a[href^="#"]',
     ));
     localAnchorLinks.forEach((link) => {
       link.addEventListener('click', (event) => {

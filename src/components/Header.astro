@@ -26,6 +26,17 @@ import { business, navigation } from '../data/site';
   <div class="scroll-progress" aria-hidden="true"></div>
 </header>
 
+<nav class="mobile-action-bar" aria-label="Quick actions" data-mobile-actions>
+  <a class="mobile-action-bar__call" href={`tel:${business.phoneHref}`}>
+    <Icon name="phone" size={19} />
+    <span>Call now</span>
+  </a>
+  <a class="mobile-action-bar__quote" href="/#quote">
+    <span>Get a quote</span>
+    <Icon name="arrow" size={18} />
+  </a>
+</nav>
+
 <script>
   const header = document.querySelector<HTMLElement>('[data-header]');
   const button = document.querySelector<HTMLButtonElement>('[data-menu-button]');
