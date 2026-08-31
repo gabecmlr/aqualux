@@ -1,0 +1,44 @@
+---
+import type { IconName } from '../data/site';
+
+interface Props {
+  name: IconName;
+  size?: number;
+  label?: string;
+  class?: string;
+}
+
+const { name, size = 24, label, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill={name === 'star' ? 'currentColor' : 'none'}
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+>
+  {label && <title>{label}</title>}
+  {name === 'arrow' && <><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></>}
+  {name === 'bolt' && <path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/>}
+  {name === 'building' && <><path d="M4 22V4h10v18"/><path d="M14 9h6v13"/><path d="M8 8h2M8 12h2M8 16h2M17 13h1M17 17h1M2 22h20"/></>}
+  {name === 'calendar' && <><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></>}
+  {name === 'check' && <path d="m5 12 4 4L19 6"/>}
+  {name === 'clock' && <><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>}
+  {name === 'droplet' && <path d="M12 2.5S5.5 9.3 5.5 14.5a6.5 6.5 0 0 0 13 0C18.5 9.3 12 2.5 12 2.5Z"/>}
+  {name === 'facebook' && <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3Z"/>}
+  {name === 'home' && <><path d="m3 11 9-8 9 8"/><path d="M5 10v11h14V10M9 21v-7h6v7"/></>}
+  {name === 'mail' && <><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></>}
+  {name === 'map' && <><path d="M12 21s7-5.1 7-12A7 7 0 1 0 5 9c0 6.9 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2"/></>}
+  {name === 'phone' && <path d="M6.6 3h3l1.5 4-2 1.6a16 16 0 0 0 6.3 6.3l1.6-2 4 1.5v3a3 3 0 0 1-3 3C10 20.4 3.6 14 3.6 6a3 3 0 0 1 3-3Z"/>}
+  {name === 'pipe' && <><path d="M4 3v5a4 4 0 0 0 4 4h8a4 4 0 0 1 4 4v5"/><path d="M2 3h4M18 21h4M9 9v6M15 9v6"/></>}
+  {name === 'shield' && <><path d="M12 22s8-3.5 8-10V5l-8-3-8 3v7c0 6.5 8 10 8 10Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></>}
+  {name === 'spark' && <><path d="m12 3 1.3 4.2L17 9l-3.7 1.8L12 15l-1.3-4.2L7 9l3.7-1.8L12 3Z"/><path d="m5 14 .8 2.2L8 17l-2.2.8L5 20l-.8-2.2L2 17l2.2-.8L5 14ZM19 3l.7 1.8L21.5 5l-1.8.7L19 7.5l-.7-1.8L16.5 5l1.8-.2L19 3Z"/></>}
+  {name === 'star' && <path d="m12 2.8 2.8 5.67 6.26.91-4.53 4.42 1.07 6.24L12 17.1l-5.6 2.94 1.07-6.24-4.53-4.42 6.26-.91L12 2.8Z"/>}
+</svg>

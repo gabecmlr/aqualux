@@ -1,0 +1,61 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MotionController from '../components/MotionController.astro';
+import { business } from '../data/site';
+import logo from '../assets/logo_aqualux_primary_20260830_full-color.png';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const { title, description, image = logo.src } = Astro.props;
+const pageTitle = title === business.name ? title : `${title} | ${business.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+const structuredData = business.verifiedForStructuredData
+  ? {
+      '@context': 'https://schema.org',
+      '@type': ['Electrician', 'Plumber'],
+      name: business.name,
+      url: Astro.site?.toString(),
+      telephone: business.phoneHref,
+      email: business.email,
+      areaServed: business.serviceArea,
+      description: business.description,
+    }
+  : null;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#030912" />
+    <meta name="description" content={description} />
+    {!business.verifiedForStructuredData && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={logo.src} type="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{pageTitle}</title>
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Header />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <MotionController />
+  </body>
+</html>

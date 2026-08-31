@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo_aqualux_primary_20260830_full-color.png';
+
+interface Props {
+  light?: boolean;
+}
+
+const { light = false } = Astro.props;
+---
+
+<a class:list={['brand', { 'brand--light': light }]} href="/#home" aria-label="Aqualux home">
+  <Image
+    class="brand__image"
+    src={logo}
+    alt="Aqualux"
+    width={320}
+    height={180}
+    format="png"
+    loading="eager"
+  />
+</a>
+
+<style>
+  .brand {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .brand:not(.brand--light) {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(232, 237, 242, 0.94));
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 1.1rem;
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.32),
+      0 0 0 1px rgba(237, 27, 50, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    height: auto;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 0.2rem 0.55rem;
+    transition: box-shadow 320ms ease, transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .brand:not(.brand--light)::after {
+    background: linear-gradient(90deg, #08284d, #ed1b32 58%, #ff5a6b);
+    bottom: 0;
+    content: '';
+    height: 3px;
+    left: 12%;
+    opacity: 0.9;
+    position: absolute;
+    right: 12%;
+  }
+
+  .brand__image {
+    height: auto;
+    max-height: 84px;
+    object-fit: contain;
+    width: 140px;
+  }
+
+  .brand--light .brand__image { width: 150px; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .brand:not(.brand--light):hover {
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(237, 27, 50, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      transform: translateY(-2px) scale(1.015);
+    }
+  }
+
+  @media (max-width: 1050px) {
+    .brand:not(.brand--light) { border-radius: 0.9rem; padding: 0.14rem 0.42rem; }
+    .brand__image { max-height: 70px; width: 120px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand:not(.brand--light) { transition-duration: 0.01ms; }
+  }
+</style>

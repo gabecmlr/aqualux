@@ -1,0 +1,237 @@
+---
+const smtpUser = import.meta.env.YAHOO_SMTP_USER?.trim() ?? '';
+const smtpPassword = import.meta.env.YAHOO_SMTP_APP_PASSWORD?.trim() ?? '';
+const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
+---
+
+<div class="quote-panel" id="quote" data-reveal="up">
+  <div class="quote-panel__heading">
+    <p class="eyebrow">Request a quote</p>
+    <h2>Request your quote.</h2>
+    <p>Share the essentials and Aqualux can clarify anything else before quoting.</p>
+  </div>
+
+  {!configured && (
+    <div class="config-notice" role="status">
+      <strong>Form delivery needs configuration.</strong>
+      <span>Add the Yahoo app password to <code>YAHOO_SMTP_APP_PASSWORD</code> to enable submissions.</span>
+    </div>
+  )}
+
+  <form
+    class="quote-form"
+    action={configured ? '/api/quote' : '#quote'}
+    method="POST"
+    data-quote-form
+    data-configured={String(configured)}
+  >
+    <input class="honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <div class="form-error-summary" role="alert" tabindex="-1" data-error-summary hidden>
+      <strong>Please check the highlighted details.</strong>
+      <ul data-error-list></ul>
+    </div>
+
+    <fieldset>
+      <legend>Your details</legend>
+      <div class="form-grid">
+        <div class="field">
+          <label for="name">Full name <span aria-hidden="true">*</span></label>
+          <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error" />
+          <span class="field-error" id="name-error" data-error-for="name"></span>
+        </div>
+        <div class="field">
+          <label for="email">Email address <span aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-error" />
+          <span class="field-error" id="email-error" data-error-for="email"></span>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number <span aria-hidden="true">*</span></label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="phone-error" />
+          <span class="field-error" id="phone-error" data-error-for="phone"></span>
+        </div>
+        <div class="field">
+          <label for="locality">Locality <span aria-hidden="true">*</span></label>
+          <input id="locality" name="locality" type="text" autocomplete="address-level2" required aria-describedby="locality-error" />
+          <span class="field-error" id="locality-error" data-error-for="locality"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>About the work</legend>
+      <div class="form-grid">
+        <div class="field">
+          <label for="customer-type">Property type <span aria-hidden="true">*</span></label>
+          <select id="customer-type" name="customer_type" required aria-describedby="customer-type-error">
+            <option value="">Select one</option>
+            <option>Home</option>
+            <option>Rental property</option>
+            <option>Business premises</option>
+            <option>Other</option>
+          </select>
+          <span class="field-error" id="customer-type-error" data-error-for="customer-type"></span>
+        </div>
+        <div class="field">
+          <label for="service">Service needed <span aria-hidden="true">*</span></label>
+          <select id="service" name="service" required aria-describedby="service-error">
+            <option value="">Select one</option>
+            <option>Electrical</option>
+            <option>Plumbing</option>
+            <option>Both electrical and plumbing</option>
+            <option>Not sure yet</option>
+          </select>
+          <span class="field-error" id="service-error" data-error-for="service"></span>
+        </div>
+        <div class="field">
+          <label for="urgency">When do you need help? <span aria-hidden="true">*</span></label>
+          <select id="urgency" name="urgency" required aria-describedby="urgency-error">
+            <option value="">Select one</option>
+            <option>Planning ahead</option>
+            <option>Within the next few weeks</option>
+            <option>As soon as possible</option>
+          </select>
+          <span class="field-error" id="urgency-error" data-error-for="urgency"></span>
+        </div>
+        <div class="field">
+          <label for="contact-method">Preferred contact <span aria-hidden="true">*</span></label>
+          <select id="contact-method" name="preferred_contact" required aria-describedby="contact-method-error">
+            <option value="">Select one</option>
+            <option>Email</option>
+            <option>Phone</option>
+            <option>Either</option>
+          </select>
+          <span class="field-error" id="contact-method-error" data-error-for="contact-method"></span>
+        </div>
+        <div class="field field--wide">
+          <label for="description">What needs doing? <span aria-hidden="true">*</span></label>
+          <textarea id="description" name="description" rows="6" minlength="20" required aria-describedby="description-help description-error"></textarea>
+          <span class="field-help" id="description-help">Include the issue, planned work and any useful access or timing details.</span>
+          <span class="field-error" id="description-error" data-error-for="description"></span>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="consent-field">
+      <input id="consent" name="privacy_consent" type="checkbox" value="yes" required aria-describedby="consent-error" />
+      <label for="consent">I agree that Aqualux may use these details to respond to my enquiry. <span aria-hidden="true">*</span></label>
+      <span class="field-error" id="consent-error" data-error-for="consent"></span>
+    </div>
+
+    <div class="form-actions">
+      <button class="button button--primary" type="submit" disabled={!configured} data-submit>
+        <span data-submit-label>{configured ? 'Send quote request' : 'Form not configured'}</span>
+        <span class="button-spinner" aria-hidden="true" hidden></span>
+      </button>
+      <p>Required fields are marked with an asterisk.</p>
+    </div>
+
+    <div class="form-status" aria-live="polite" aria-atomic="true" data-form-status></div>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-quote-form]');
+
+  if (form) {
+    // Native constraint validation remains the no-JavaScript fallback.
+    // With JavaScript available, use the accessible inline summary instead.
+    form.noValidate = true;
+    const summary = form.querySelector<HTMLElement>('[data-error-summary]')!;
+    const errorList = form.querySelector<HTMLUListElement>('[data-error-list]')!;
+    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
+    const spinner = form.querySelector<HTMLElement>('.button-spinner')!;
+
+    const messageFor = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      if (field.validity.valueMissing) return `${field.labels?.[0]?.textContent?.replace('*', '').trim() ?? 'This field'} is required.`;
+      if (field.validity.typeMismatch) return 'Enter a valid email address.';
+      if (field.validity.tooShort && 'minLength' in field) return `Please enter at least ${field.minLength} characters.`;
+      return 'Please check this field.';
+    };
+
+    const clearError = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      field.removeAttribute('aria-invalid');
+      const error = form.querySelector<HTMLElement>(`[data-error-for="${field.id}"]`);
+      if (error) error.textContent = '';
+    };
+
+    const showError = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      const message = messageFor(field);
+      field.setAttribute('aria-invalid', 'true');
+      const error = form.querySelector<HTMLElement>(`[data-error-for="${field.id}"]`);
+      if (error) error.textContent = message;
+      return message;
+    };
+
+    form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input:not(.honeypot), select, textarea').forEach((field) => {
+      field.addEventListener('blur', () => field.validity.valid ? clearError(field) : showError(field));
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true' && field.validity.valid) clearError(field);
+      });
+    });
+
+    form.addEventListener('submit', async (event) => {
+      if (form.dataset.configured !== 'true') {
+        event.preventDefault();
+        status.className = 'form-status form-status--error';
+        status.textContent = 'Email delivery is not configured yet. Add the Yahoo app password before launch.';
+        return;
+      }
+
+      const invalid = Array.from(form.elements).filter((element): element is HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement =>
+        element instanceof HTMLInputElement || element instanceof HTMLSelectElement || element instanceof HTMLTextAreaElement
+      ).filter((field) => !field.validity.valid && !field.classList.contains('honeypot'));
+
+      if (invalid.length) {
+        event.preventDefault();
+        errorList.innerHTML = '';
+        invalid.forEach((field) => {
+          const message = showError(field);
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = `#${field.id}`;
+          link.textContent = message;
+          item.append(link);
+          errorList.append(item);
+        });
+        summary.hidden = false;
+        summary.focus();
+        return;
+      }
+
+      event.preventDefault();
+      summary.hidden = true;
+      status.textContent = '';
+      submit.disabled = true;
+      submitLabel.textContent = 'Sending request…';
+      spinner.hidden = false;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const result = await response.json().catch(() => null) as { confirmationSent?: boolean } | null;
+        if (!response.ok) throw new Error('Submission failed');
+
+        form.reset();
+        if (result?.confirmationSent === false) {
+          status.className = 'form-status form-status--warning';
+          status.textContent = 'Your quote request has been sent to Aqualux, but we could not deliver the confirmation email. Please check the email address you entered.';
+        } else {
+          status.className = 'form-status form-status--success';
+          status.textContent = 'Thank you. Your quote request has been sent to Aqualux, and a confirmation email is on its way.';
+        }
+      } catch {
+        status.className = 'form-status form-status--error';
+        status.textContent = 'We could not send your request. Please try again or contact Aqualux directly.';
+      } finally {
+        submit.disabled = false;
+        submitLabel.textContent = 'Send quote request';
+        spinner.hidden = true;
+      }
+    });
+  }
+</script>

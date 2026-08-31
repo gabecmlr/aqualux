@@ -1,0 +1,34 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { business, navigation } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer__grid">
+    <div class="footer__intro">
+      <Logo />
+      <p>{business.description}</p>
+    </div>
+    <div>
+      <h2 class="footer__heading">Explore</h2>
+      <ul class="footer__links">
+        {navigation.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__heading">Contact</h2>
+      <ul class="footer__contact">
+        <li><Icon name="phone" size={19} /><a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a></li>
+        <li><Icon name="mail" size={19} /><a href={`mailto:${business.email}`}>{business.email}</a></li>
+        <li><Icon name="facebook" size={19} /><a href={business.facebookUrl} target="_blank" rel="noopener noreferrer">Facebook<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><Icon name="map" size={19} /><span>{business.serviceArea}</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <p>© {year} Aqualux. All rights reserved.</p>
+  </div>
+</footer>

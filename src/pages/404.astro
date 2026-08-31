@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout title="Page not found" description="The requested Aqualux page could not be found.">
+  <section class="not-found">
+    <div class="not-found__glow not-found__glow--red" aria-hidden="true"></div>
+    <div class="not-found__glow not-found__glow--blue" aria-hidden="true"></div>
+    <div class="container not-found__grid">
+      <div class="not-found__content" data-reveal="left">
+        <p class="eyebrow eyebrow--light">404 · Service interruption</p>
+        <h1>Well, this is a bit <em>shocking.</em></h1>
+        <p class="not-found__lead">The page you’re looking for has either blown a fuse or gone down the drain.</p>
+        <div class="not-found__actions">
+          <a class="button button--aqua" href="/#home">Back to dry land <Icon name="arrow" size={19} /></a>
+          <a class="text-link text-link--light" href="/#quote">Plug into our quote form</a>
+        </div>
+        <p class="not-found__aside"><Icon name="spark" size={18} /> No leaks here—just a missing link.</p>
+      </div>
+
+      <div class="not-found__visual" aria-hidden="true" data-reveal="scale">
+        <div class="not-found__rings"></div>
+        <div class="not-found__code">
+          <span>4</span>
+          <span class="not-found__drop"><Icon name="droplet" size={92} /></span>
+          <span>4</span>
+        </div>
+        <div class="not-found__status"><Icon name="bolt" size={18} /> Connection tripped</div>
+        <span class="not-found__spark not-found__spark--one"><Icon name="spark" size={30} /></span>
+        <span class="not-found__spark not-found__spark--two"><Icon name="spark" size={20} /></span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    align-items: center;
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      radial-gradient(circle at 78% 18%, #241018 0, #08182b 36%, #02060b 76%);
+    background-size: 46px 46px, 46px 46px, auto;
+    color: #c8d2de;
+    display: flex;
+    min-height: calc(100svh - var(--header-height));
+    overflow: hidden;
+    padding-block: clamp(4.5rem, 9vw, 8rem);
+    position: relative;
+  }
+
+  .not-found__grid {
+    align-items: center;
+    display: grid;
+    gap: clamp(3rem, 7vw, 6.5rem);
+    grid-template-columns: 1.05fr 0.95fr;
+    position: relative;
+    z-index: 2;
+  }
+
+  .not-found h1 {
+    color: var(--white);
+    font-size: clamp(3.1rem, 6.5vw, 6.2rem);
+    margin-bottom: 1.5rem;
+    max-width: 760px;
+  }
+
+  .not-found h1 em { color: var(--aqua-300); font-style: normal; }
+
+  .not-found__lead {
+    font-size: clamp(1.08rem, 2vw, 1.28rem);
+    max-width: 610px;
+  }
+
+  .not-found__actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .not-found__aside {
+    align-items: center;
+    color: #91a8b4;
+    display: flex;
+    font-size: 0.86rem;
+    gap: 0.55rem;
+    margin: 1.4rem 0 0;
+  }
+
+  .not-found__aside svg { color: var(--aqua-300); flex: 0 0 auto; }
+
+  .not-found__visual {
+    align-items: center;
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 50%;
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 35px 90px rgba(0, 0, 0, 0.28);
+    display: flex;
+    justify-content: center;
+    justify-self: end;
+    max-width: 475px;
+    position: relative;
+    width: 100%;
+  }
+
+  .not-found__visual::before {
+    animation: trace-ring 7s linear infinite;
+    background: conic-gradient(from 0deg, transparent 0 64%, rgba(237, 27, 50, 0.95) 72%, rgba(255, 255, 255, 0.9) 76%, transparent 84%);
+    border-radius: inherit;
+    content: '';
+    inset: -2px;
+    padding: 2px;
+    pointer-events: none;
+    position: absolute;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .not-found__rings,
+  .not-found__rings::before,
+  .not-found__rings::after {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 50%;
+    content: '';
+    inset: 11%;
+    position: absolute;
+  }
+
+  .not-found__rings::before { inset: 12%; }
+  .not-found__rings::after { inset: 27%; }
+
+  .not-found__code {
+    align-items: center;
+    color: var(--white);
+    display: flex;
+    font-family: var(--font-display);
+    font-size: clamp(4.4rem, 10vw, 8.2rem);
+    font-weight: 800;
+    gap: 0.1em;
+    letter-spacing: -0.09em;
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  .not-found__drop {
+    align-items: center;
+    color: #4a9bd4;
+    display: flex;
+    filter: drop-shadow(0 16px 28px rgba(74, 155, 212, 0.35));
+    justify-content: center;
+    margin-inline: 0.02em;
+  }
+
+  .not-found__drop svg { fill: currentColor; stroke: #9fd7ff; }
+
+  .not-found__status {
+    align-items: center;
+    backdrop-filter: blur(12px);
+    background: rgba(3, 9, 18, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    bottom: 12%;
+    color: var(--white);
+    display: flex;
+    font-size: 0.76rem;
+    font-weight: 750;
+    gap: 0.45rem;
+    padding: 0.65rem 0.85rem;
+    position: absolute;
+    z-index: 3;
+  }
+
+  .not-found__status svg { color: var(--aqua-300); }
+
+  .not-found__spark {
+    color: var(--aqua-300);
+    position: absolute;
+  }
+
+  .not-found__spark--one { right: 12%; top: 17%; }
+  .not-found__spark--two { bottom: 25%; left: 12%; }
+
+  .not-found__glow {
+    border-radius: 50%;
+    filter: blur(18px);
+    opacity: 0.18;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .not-found__glow--red { background: var(--aqua-500); height: 30rem; right: -12rem; top: -12rem; width: 30rem; }
+  .not-found__glow--blue { background: #2379b5; bottom: -16rem; height: 34rem; left: -14rem; width: 34rem; }
+
+  @keyframes trace-ring { to { transform: rotate(360deg); } }
+
+  @media (max-width: 800px) {
+    .not-found__grid { grid-template-columns: 1fr; }
+    .not-found__content { max-width: 680px; }
+    .not-found__visual { justify-self: center; max-width: 430px; }
+  }
+
+  @media (max-width: 620px) {
+    .not-found { padding-block: 4rem; }
+    .not-found__actions { align-items: stretch; flex-direction: column; }
+    .not-found__actions .button { width: 100%; }
+    .not-found__actions .text-link { justify-content: center; }
+    .not-found__code { font-size: clamp(4rem, 23vw, 6.5rem); }
+    .not-found__drop svg { height: 68px; width: 68px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .not-found__visual::before { animation: none; }
+  }
+</style>

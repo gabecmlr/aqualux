@@ -1,0 +1,54 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { business, navigation } from '../data/site';
+---
+
+<header class="site-header" data-header>
+  <div class="container header__inner">
+    <Logo />
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-button>
+      <span class="menu-button__lines" aria-hidden="true"><i></i><i></i></span>
+      <span class="sr-only">Open navigation menu</span>
+    </button>
+    <nav class="primary-nav" id="primary-navigation" aria-label="Page sections" data-navigation>
+      <ul>
+        {navigation.map((item, index) => (
+          <li><a href={item.href} aria-current={index === 0 ? 'location' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+      <div class="header__actions">
+        <a class="phone-link" href={`tel:${business.phoneHref}`}><Icon name="phone" size={18} /><span>{business.phoneDisplay}</span></a>
+        <a class="button button--primary button--small" href="/#quote">Get a quote</a>
+      </div>
+    </nav>
+  </div>
+  <div class="scroll-progress" aria-hidden="true"></div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const button = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const navigation = document.querySelector<HTMLElement>('[data-navigation]');
+
+  if (header && button && navigation) {
+    const setOpen = (open: boolean) => {
+      header.dataset.open = String(open);
+      button.setAttribute('aria-expanded', String(open));
+      button.querySelector('.sr-only')!.textContent = open ? 'Close navigation menu' : 'Open navigation menu';
+    };
+    button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+    navigation.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        button.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (!header.contains(event.target as Node)) setOpen(false);
+    });
+  }
+</script>

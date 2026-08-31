@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Placeholder content is intentionally blocked from indexing.
+# Replace this file and the example site URL before production launch.

@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ReviewCard from '../components/ReviewCard.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { business, faqs, processSteps, projects, reviews, services } from '../data/site';
+---
+
+<BaseLayout
+  title="Aqualux"
+  description="Dependable electrical and plumbing services for homes, landlords and local businesses."
+>
+  <section class="hero anchor-section" id="home" data-nav-section>
+    <div class="hero__glow hero__glow--one" aria-hidden="true"></div>
+    <div class="hero__glow hero__glow--two" aria-hidden="true"></div>
+    <div class="hero__swoosh" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div class="hero__content" data-reveal="left">
+        <p class="eyebrow eyebrow--light">Electrical + plumbing, thoughtfully handled</p>
+        <h1>Water flows. Power works. <em>Life carries on.</em></h1>
+        <p class="hero__lead">{business.description} One clear conversation, two essential trades.</p>
+        <div class="hero__actions">
+          <a class="button button--aqua" href="#quote">Request a quote <Icon name="arrow" size={19} /></a>
+          <a class="text-link text-link--light" href={`tel:${business.phoneHref}`}><Icon name="phone" size={19} /> {business.phoneDisplay}</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Abstract illustration combining water and electricity" data-reveal="scale">
+        <div class="hero-visual__grid" aria-hidden="true"></div>
+        <div class="hero-visual__orb hero-visual__orb--water" aria-hidden="true">
+          <svg viewBox="0 0 210 250"><path d="M105 5S18 99 18 162a87 87 0 0 0 174 0C192 99 105 5 105 5Z" /></svg>
+        </div>
+        <div class="hero-visual__orb hero-visual__orb--power" aria-hidden="true">
+          <svg viewBox="0 0 180 260"><path d="M105 0 18 145h69L70 260l92-155H94L105 0Z" /></svg>
+        </div>
+        <div class="hero-visual__label hero-visual__label--top"><Icon name="droplet" size={18} /> Precise plumbing</div>
+        <div class="hero-visual__label hero-visual__label--bottom"><Icon name="bolt" size={18} /> Careful electrical</div>
+      </div>
+    </div>
+    <div class="container trust-bar" aria-label="What to expect" data-stagger>
+      <div data-reveal="up"><Icon name="shield" size={22} /><span><strong>Clear scope</strong> before work begins</span></div>
+      <div data-reveal="up"><Icon name="spark" size={22} /><span><strong>Neat thinking</strong> from issue to finish</span></div>
+      <div data-reveal="up"><Icon name="building" size={22} /><span><strong>Homes & businesses</strong> supported</span></div>
+    </div>
+  </section>
+
+  <section class="section section--services anchor-section interactive-surface" id="services" data-nav-section data-interactive-surface>
+    <div class="container">
+      <SectionHeading eyebrow="Services" title="Two essential trades. One dependable standard." text="Repairs, upgrades and planned installations for homes, rental properties and local businesses." />
+      <div class="service-grid service-grid--detailed" data-stagger>
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+      <p class="demo-note">Service coverage shown is illustrative and must be confirmed by Aqualux before launch.</p>
+    </div>
+    <div class="container process-band" data-reveal="up">
+      <div class="process-band__heading">
+        <p class="eyebrow eyebrow--light">A clear process</p>
+        <h2>From first message to agreed quote.</h2>
+      </div>
+      <ol class="step-cards" data-stagger>
+        {processSteps.map((step) => <li data-reveal="up"><span>{step.number}</span><h3>{step.title}</h3><p>{step.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section anchor-section interactive-surface" id="work" data-nav-section data-interactive-surface>
+    <div class="container">
+      <SectionHeading eyebrow="Our work" title="Proof you can see. Feedback you can trust." text="Before-and-after projects and approved customer reviews will show the standard of Aqualux work in one place." />
+      <div class="evidence-notice" data-reveal="up">
+        <Icon name="shield" size={25} />
+        <div><strong>Honest placeholders</strong><p>The entries below are layout examples, not claims of completed work. Replace every photo, fact and review with customer-approved evidence before launch.</p></div>
+      </div>
+      <div class="project-list" data-stagger>
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+      <div class="reviews-block" id="reviews">
+        <div class="reviews-block__glow" aria-hidden="true"></div>
+        <SectionHeading eyebrow="Customer reviews" title="Good work deserves five-star feedback." text="A more polished preview of how genuine, customer-approved reviews will be presented." align="center" light />
+        <p class="reviews-block__disclaimer" data-reveal="up"><Icon name="shield" size={18} /> Five-star visuals are placeholders until verified reviews are supplied.</p>
+        <div class="review-grid" data-stagger>
+          {reviews.map((review, index) => <ReviewCard review={review} featured={index === 1} />)}
+        </div>
+        <div class="center-action" data-reveal="up">
+          <a
+            class="button button--primary"
+            href={business.facebookReviewsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Leave an Aqualux review on Facebook (opens in a new tab)"
+          >
+            Leave a review on Facebook <Icon name="facebook" size={19} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--mist anchor-section interactive-surface" id="faqs" data-nav-section data-interactive-surface>
+    <div class="container faq-grid">
+      <SectionHeading eyebrow="FAQs" title="Useful answers before you enquire." text="Quick answers about services, quotes and coverage." />
+      <div class="faq-list" data-stagger>
+        {faqs.map((faq, index) => (
+          <details name="aqualux-faq" open={index === 0} data-reveal="up">
+            <summary><span>{faq.question}</span><span class="faq-icon" aria-hidden="true"></span></summary>
+            <div class="faq-answer"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact-section anchor-section interactive-surface" id="contact" data-nav-section data-interactive-surface>
+    <div class="container contact-grid">
+      <aside class="contact-aside" aria-labelledby="contact-details-heading" data-reveal="left">
+        <p class="eyebrow">Contact Aqualux</p>
+        <h2 id="contact-details-heading">Tell us about the job.</h2>
+        <p>Use the quote form or contact Aqualux directly by phone or email.</p>
+        <ul class="contact-list">
+          <li><div class="icon-tile"><Icon name="phone" size={23} /></div><div><span>Phone</span><a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a></div></li>
+          <li><div class="icon-tile"><Icon name="mail" size={23} /></div><div><span>Email</span><a href={`mailto:${business.email}`}>{business.email}</a></div></li>
+          <li><div class="icon-tile"><Icon name="facebook" size={23} /></div><div><span>Facebook</span><a href={business.facebookUrl} target="_blank" rel="noopener noreferrer">Visit our page<span class="sr-only"> (opens in a new tab)</span></a></div></li>
+          <li><div class="icon-tile"><Icon name="map" size={23} /></div><div><span>Service area</span><strong>{business.serviceArea}</strong></div></li>
+        </ul>
+      </aside>
+      <ContactForm />
+    </div>
+  </section>
+</BaseLayout>

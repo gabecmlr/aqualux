@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+import type { Service } from '../data/site';
+
+interface Props { service: Service; compact?: boolean; }
+const { service, compact = false } = Astro.props;
+---
+
+<article class:list={['service-card', { 'service-card--compact': compact }]} data-reveal="up" data-spotlight>
+  <div class="icon-tile"><Icon name={service.icon} size={28} /></div>
+  <div>
+    <h3>{service.title}</h3>
+    <p>{service.description}</p>
+    {!compact && (
+      <ul class="check-list">
+        {service.items.map((item) => <li><Icon name="check" size={17} /> <span>{item}</span></li>)}
+      </ul>
+    )}
+  </div>
+</article>

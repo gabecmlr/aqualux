@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import type { Review } from '../data/site';
+
+interface Props {
+  review: Review;
+  featured?: boolean;
+}
+
+const { review, featured = false } = Astro.props;
+const initials = review.name
+  .split(/\s+/)
+  .filter(Boolean)
+  .slice(0, 2)
+  .map((part) => part[0]?.toUpperCase())
+  .join('');
+---
+
+<figure class:list={['review-card', { 'review-card--featured': featured }]} data-reveal="up">
+  <div class="review-card__surface" data-spotlight>
+    <div class="review-card__topline">
+      <span class="demo-badge">Demo review</span>
+      <span class="review-card__stars" role="img" aria-label="Five-star rating display placeholder">
+        <span aria-hidden="true">
+          {Array.from({ length: review.rating }, () => <Icon name="star" size={18} />)}
+        </span>
+      </span>
+    </div>
+    <span class="review-card__quote-mark" aria-hidden="true">&ldquo;</span>
+    <blockquote><p>{review.quote}</p></blockquote>
+    <figcaption class="review-card__author">
+      <span class="review-card__avatar" aria-hidden="true">{initials || 'AQ'}</span>
+      <span class="review-card__identity"><strong>{review.name}</strong><span>{review.context}</span></span>
+    </figcaption>
+    <p class="review-card__rating-note">Five-star layout preview</p>
+  </div>
+</figure>
