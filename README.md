@@ -29,7 +29,7 @@ YAHOO_SMTP_APP_PASSWORD=your-yahoo-app-password
 
 Never use the mailbox's normal sign-in password. If the app password is missing, the interface reports that delivery is not configured and disables submission. The form includes server-side validation, origin checking, a honeypot and basic rate limiting.
 
-Because email delivery runs on the server, production hosting must support a persistent Node.js Astro server. Static-only hosting cannot run the quote endpoint. Add the same environment variables to the hosting provider rather than committing `.env`.
+Because email delivery runs on the server, production hosting must support Astro server rendering. Static-only hosting cannot run the quote endpoint. On Vercel, add both variables under **Project Settings → Environment Variables** for Production and Preview, then redeploy so the new values are applied. Never commit `.env` or `.env.local`.
 
 ## Local development
 
