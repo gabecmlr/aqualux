@@ -165,22 +165,22 @@ import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
 
   <section class="section section--mist anchor-section interactive-surface" id="faqs" data-nav-section data-interactive-surface>
     <div class="container faq-grid">
-      <div class="faq-intro">
-        <SectionHeading eyebrow="FAQs" title="Useful answers before you enquire." text="Quick answers about services, quotes and coverage." />
-        <figure class="context-photo context-photo--faq" data-reveal="scale">
-          <Image
-            class="site-photo"
-            src={plumbingShowerEnclosure}
-            alt="Completed tiled shower enclosure with glass screen"
-            widths={[360, 560, 760]}
-            sizes="(max-width: 800px) 100vw, 34vw"
-            format="webp"
-            quality={82}
-            loading="lazy"
-          />
-          <figcaption>Finished plumbing installation</figcaption>
-        </figure>
-      </div>
+      <figure class="embedded-photo faq-intro" data-reveal="scale">
+        <Image
+          class="site-photo embedded-photo__image"
+          src={plumbingShowerEnclosure}
+          alt="Completed tiled shower enclosure with glass screen"
+          widths={[360, 560, 760]}
+          sizes="(max-width: 800px) 100vw, 34vw"
+          format="webp"
+          quality={82}
+          loading="lazy"
+        />
+        <div class="embedded-photo__content faq-intro__content">
+          <SectionHeading eyebrow="FAQs" title="Useful answers before you enquire." text="Quick answers about services, quotes and coverage." light />
+        </div>
+        <figcaption class="embedded-photo__caption">Finished plumbing installation</figcaption>
+      </figure>
       <div class="faq-list" data-stagger>
         {faqs.map((faq) => (
           <details name="aqualux-faq" data-reveal="up">
@@ -195,27 +195,9 @@ import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
   <section class="section contact-section anchor-section interactive-surface" id="contact" data-nav-section data-interactive-surface>
     <div class="container contact-grid">
       <aside class="contact-aside" aria-labelledby="contact-details-heading" data-reveal="left">
-        <p class="eyebrow">Contact Aqualux</p>
-        <h2 id="contact-details-heading">Tell us about the job.</h2>
-        <p>Use the quote form or contact Aqualux directly by phone, email or WhatsApp.</p>
-        <a
-          class="button button--whatsapp contact-whatsapp"
-          href={business.whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Message Aqualux on WhatsApp (opens in a new tab)"
-        >
-          <Icon name="phone" size={19} /> <span>Message us on WhatsApp</span>
-        </a>
-        <ul class="contact-list">
-          <li><div class="icon-tile"><Icon name="phone" size={23} /></div><div><span>Phone</span><a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a></div></li>
-          <li><div class="icon-tile"><Icon name="mail" size={23} /></div><div><span>Email</span><a href={`mailto:${business.email}`}>{business.email}</a></div></li>
-          <li><div class="icon-tile"><Icon name="facebook" size={23} /></div><div><span>Facebook</span><a href={business.facebookUrl} target="_blank" rel="noopener noreferrer">Visit our page<span class="sr-only"> (opens in a new tab)</span></a></div></li>
-          <li><div class="icon-tile"><Icon name="map" size={23} /></div><div><span>Service area</span><strong>{business.serviceArea}</strong></div></li>
-        </ul>
-        <figure class="context-photo context-photo--contact" data-reveal="scale">
+        <figure class="embedded-photo contact-aside__feature">
           <Image
-            class="site-photo"
+            class="site-photo embedded-photo__image"
             src={electricalLightingVanity}
             alt="Bathroom vanity with backlit mirrors and pendant lighting"
             widths={[360, 560, 760]}
@@ -224,8 +206,28 @@ import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
             quality={82}
             loading="lazy"
           />
-          <figcaption>Lighting and plumbing, neatly coordinated</figcaption>
+          <div class="embedded-photo__content contact-aside__feature-content">
+            <p class="eyebrow eyebrow--light">Contact Aqualux</p>
+            <h2 id="contact-details-heading">Tell us about the job.</h2>
+            <p>Use the quote form or contact Aqualux directly by phone, email or WhatsApp.</p>
+            <a
+              class="button button--whatsapp contact-whatsapp"
+              href={business.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Message Aqualux on WhatsApp (opens in a new tab)"
+            >
+              <Icon name="phone" size={19} /> <span>Message us on WhatsApp</span>
+            </a>
+          </div>
+          <figcaption class="embedded-photo__caption">Lighting and plumbing, neatly coordinated</figcaption>
         </figure>
+        <ul class="contact-list">
+          <li><div class="icon-tile"><Icon name="phone" size={23} /></div><div><span>Phone</span><a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a></div></li>
+          <li><div class="icon-tile"><Icon name="mail" size={23} /></div><div><span>Email</span><a href={`mailto:${business.email}`}>{business.email}</a></div></li>
+          <li><div class="icon-tile"><Icon name="facebook" size={23} /></div><div><span>Facebook</span><a href={business.facebookUrl} target="_blank" rel="noopener noreferrer">Visit our page<span class="sr-only"> (opens in a new tab)</span></a></div></li>
+          <li><div class="icon-tile"><Icon name="map" size={23} /></div><div><span>Service area</span><strong>{business.serviceArea}</strong></div></li>
+        </ul>
       </aside>
       <ContactForm />
     </div>
