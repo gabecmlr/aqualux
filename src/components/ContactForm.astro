@@ -118,11 +118,11 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
     </div>
 
     <div class="form-actions">
-      <button class="button button--primary" type="submit" disabled={!configured} data-submit>
+      <button class="button button--primary" type="submit" disabled data-submit>
         <span data-submit-label>{configured ? 'Send quote request' : 'Form not configured'}</span>
         <span class="button-spinner" aria-hidden="true" hidden></span>
       </button>
-      <p>Required fields are marked with an asterisk.</p>
+      <p>Agree to the privacy statement above to enable sending. Required fields are marked with an asterisk.</p>
     </div>
 
     <div class="form-status" aria-live="polite" aria-atomic="true" data-form-status></div>
@@ -142,6 +142,16 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
     const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
     const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
     const spinner = form.querySelector<HTMLElement>('.button-spinner')!;
+    const consent = form.querySelector<HTMLInputElement>('#consent')!;
+    const configured = form.dataset.configured === 'true';
+    let sending = false;
+
+    const syncSubmitState = () => {
+      submit.disabled = !configured || !consent.checked || sending;
+    };
+
+    consent.addEventListener('change', syncSubmitState);
+    syncSubmitState();
 
     const messageFor = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
       if (field.validity.valueMissing) return `${field.labels?.[0]?.textContent?.replace('*', '').trim() ?? 'This field'} is required.`;
@@ -172,7 +182,7 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
     });
 
     form.addEventListener('submit', async (event) => {
-      if (form.dataset.configured !== 'true') {
+      if (!configured) {
         event.preventDefault();
         status.className = 'form-status form-status--error';
         status.textContent = 'Email delivery is not configured yet. Add the Yahoo app password before launch.';
@@ -203,7 +213,8 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
       event.preventDefault();
       summary.hidden = true;
       status.textContent = '';
-      submit.disabled = true;
+      sending = true;
+      syncSubmitState();
       submitLabel.textContent = 'Sending request…';
       spinner.hidden = false;
 
@@ -228,7 +239,8 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
         status.className = 'form-status form-status--error';
         status.textContent = 'We could not send your request. Please try again or contact Aqualux directly.';
       } finally {
-        submit.disabled = false;
+        sending = false;
+        syncSubmitState();
         submitLabel.textContent = 'Send quote request';
         spinner.hidden = true;
       }

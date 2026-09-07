@@ -46,6 +46,7 @@ export const business = {
   strapline: 'Water flows. Power works. Life carries on.',
   phoneDisplay: '7740 9959',
   phoneHref: '+35677409959',
+  whatsappUrl: 'https://wa.me/35677409959',
   email: 'aqualux1@ymail.com',
   facebookUrl: 'https://www.facebook.com/profile.php?id=61565164504310',
   facebookReviewsUrl: 'https://www.facebook.com/profile.php?id=61565164504310&sk=reviews',

@@ -18,6 +18,8 @@
   --muted: #506975;
   --error: #a72a2a;
   --success: #146845;
+  --whatsapp: #075e54;
+  --whatsapp-dark: #05483f;
   --font-display: "Aptos Display", "Segoe UI", sans-serif;
   --font-body: Aptos, "Segoe UI", sans-serif;
   --shadow-sm: 0 8px 24px rgba(7, 29, 43, 0.07);
@@ -152,13 +154,16 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
 .button > * { position: relative; z-index: 1; }
 .button svg { transition: transform 360ms var(--motion-spring); }
 .button:active { box-shadow: none; transform: translate3d(0, 0, 0) scale(0.975); transition-duration: 90ms; }
-.button:disabled { cursor: not-allowed; opacity: 0.55; }
+.button:disabled { background: #82929a; border-color: #82929a; box-shadow: none; color: var(--white); cursor: not-allowed; opacity: 0.62; }
+.button:disabled::before { display: none; }
 .button--primary { background: var(--aqua-500); color: var(--white); }
-.button--primary:hover { background: var(--aqua-300); }
+.button--primary:not(:disabled):hover { background: var(--aqua-300); }
 .button--aqua { background: var(--aqua-500); color: var(--white); }
-.button--aqua:hover { background: var(--white); color: var(--navy-950); }
+.button--aqua:not(:disabled):hover { background: var(--white); color: var(--navy-950); }
 .button--light { background: var(--white); color: var(--navy-950); }
-.button--light:hover { background: var(--aqua-100); }
+.button--light:not(:disabled):hover { background: var(--aqua-100); }
+.button--whatsapp { background: var(--whatsapp); color: var(--white); }
+.button--whatsapp:not(:disabled):hover { background: var(--whatsapp-dark); }
 .button--small { min-height: 44px; padding: 0.55rem 1.1rem; }
 
 @media (hover: hover) and (pointer: fine) {
@@ -423,6 +428,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); }
 .contact-aside { position: sticky; top: calc(var(--header-height) + 2rem); }
 .contact-aside h2 { margin-bottom: 1rem; }
 .contact-aside > p:not(.eyebrow) { color: var(--muted); }
+.contact-whatsapp { margin-top: 1.25rem; }
 .contact-list { display: grid; gap: 1.15rem; list-style: none; margin: 2rem 0; padding: 0; }
 .contact-list li { align-items: center; display: flex; gap: 1rem; }
 .contact-list li > div:last-child { min-width: 0; }
@@ -726,6 +732,7 @@ html.motion-enabled [data-reveal].is-visible {
   .faq-answer { padding: 0 2.5rem 1.2rem 0; }
 
   .contact-grid { gap: 2.5rem; }
+  .contact-whatsapp { margin-top: 1rem; width: 100%; }
   .contact-list { gap: .75rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 1.5rem 0 0; }
   .contact-list li { align-items: flex-start; background: var(--mist-50); border: 1px solid var(--silver-200); border-radius: 1rem; flex-direction: column; gap: .55rem; min-height: 116px; padding: .8rem; }
   .contact-list .icon-tile { height: 40px; width: 40px; }

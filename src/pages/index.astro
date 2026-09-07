@@ -101,8 +101,8 @@ import { business, faqs, processSteps, projects, reviews, services } from '../da
     <div class="container faq-grid">
       <SectionHeading eyebrow="FAQs" title="Useful answers before you enquire." text="Quick answers about services, quotes and coverage." />
       <div class="faq-list" data-stagger>
-        {faqs.map((faq, index) => (
-          <details name="aqualux-faq" open={index === 0} data-reveal="up">
+        {faqs.map((faq) => (
+          <details name="aqualux-faq" data-reveal="up">
             <summary><span>{faq.question}</span><span class="faq-icon" aria-hidden="true"></span></summary>
             <div class="faq-answer"><p>{faq.answer}</p></div>
           </details>
@@ -116,7 +116,16 @@ import { business, faqs, processSteps, projects, reviews, services } from '../da
       <aside class="contact-aside" aria-labelledby="contact-details-heading" data-reveal="left">
         <p class="eyebrow">Contact Aqualux</p>
         <h2 id="contact-details-heading">Tell us about the job.</h2>
-        <p>Use the quote form or contact Aqualux directly by phone or email.</p>
+        <p>Use the quote form or contact Aqualux directly by phone, email or WhatsApp.</p>
+        <a
+          class="button button--whatsapp contact-whatsapp"
+          href={business.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Message Aqualux on WhatsApp (opens in a new tab)"
+        >
+          <Icon name="phone" size={19} /> <span>Message us on WhatsApp</span>
+        </a>
         <ul class="contact-list">
           <li><div class="icon-tile"><Icon name="phone" size={23} /></div><div><span>Phone</span><a href={`tel:${business.phoneHref}`}>{business.phoneDisplay}</a></div></li>
           <li><div class="icon-tile"><Icon name="mail" size={23} /></div><div><span>Email</span><a href={`mailto:${business.email}`}>{business.email}</a></div></li>
