@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
 import ServiceCard from '../components/ServiceCard.astro';
@@ -7,6 +8,13 @@ import ProjectCard from '../components/ProjectCard.astro';
 import ReviewCard from '../components/ReviewCard.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { business, faqs, processSteps, projects, reviews, services } from '../data/site';
+import electricalControlPanel from '../assets/work/electrical-control-panel.jpeg';
+import electricalDistributionBoard from '../assets/work/electrical-distribution-board.jpeg';
+import electricalLightingVanity from '../assets/work/electrical-lighting-vanity.jpeg';
+import plumbingShowerEnclosure from '../assets/work/plumbing-shower-enclosure.jpeg';
+import plumbingShowerFixture from '../assets/work/plumbing-shower-fixture.jpeg';
+import plumbingVanity from '../assets/work/plumbing-vanity.jpeg';
+import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
 ---
 
 <BaseLayout
@@ -27,13 +35,30 @@ import { business, faqs, processSteps, projects, reviews, services } from '../da
           <a class="text-link text-link--light" href={`tel:${business.phoneHref}`}><Icon name="phone" size={19} /> {business.phoneDisplay}</a>
         </div>
       </div>
-      <div class="hero-visual" aria-label="Abstract illustration combining water and electricity" data-reveal="scale">
+      <div class="hero-visual hero-visual--photos" data-reveal="scale">
         <div class="hero-visual__grid" aria-hidden="true"></div>
-        <div class="hero-visual__orb hero-visual__orb--water" aria-hidden="true">
-          <svg viewBox="0 0 210 250"><path d="M105 5S18 99 18 162a87 87 0 0 0 174 0C192 99 105 5 105 5Z" /></svg>
-        </div>
-        <div class="hero-visual__orb hero-visual__orb--power" aria-hidden="true">
-          <svg viewBox="0 0 180 260"><path d="M105 0 18 145h69L70 260l92-155H94L105 0Z" /></svg>
+        <div class="hero-visual__photos">
+          <Image
+            class="site-photo hero-visual__photo hero-visual__photo--finish"
+            src={electricalLightingVanity}
+            alt="Bathroom vanity with backlit mirrors and pendant lighting"
+            widths={[280, 420, 620]}
+            sizes="(max-width: 800px) 50vw, 240px"
+            format="webp"
+            quality={82}
+            loading="eager"
+            fetchpriority="high"
+          />
+          <Image
+            class="site-photo hero-visual__photo hero-visual__photo--electrical"
+            src={electricalControlPanel}
+            alt="Detailed electrical control panel installation"
+            widths={[280, 420, 620]}
+            sizes="(max-width: 800px) 50vw, 240px"
+            format="webp"
+            quality={82}
+            loading="eager"
+          />
         </div>
         <div class="hero-visual__label hero-visual__label--top"><Icon name="droplet" size={18} /> Precise plumbing</div>
         <div class="hero-visual__label hero-visual__label--bottom"><Icon name="bolt" size={18} /> Careful electrical</div>
@@ -51,6 +76,47 @@ import { business, faqs, processSteps, projects, reviews, services } from '../da
       <SectionHeading eyebrow="Services" title="Two essential trades. One dependable standard." text="Repairs, upgrades and planned installations for homes, rental properties and local businesses." />
       <div class="service-grid service-grid--detailed" data-stagger>
         {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+      <div class="service-photo-grid" aria-label="Examples of Aqualux installations" data-stagger>
+        <figure class="service-photo service-photo--plumbing" data-reveal="up">
+          <Image
+            class="site-photo"
+            src={plumbingShowerFixture}
+            alt="Chrome shower fixture installed against neutral wall tiles"
+            widths={[320, 520, 760]}
+            sizes="(max-width: 800px) 100vw, 34vw"
+            format="webp"
+            quality={82}
+            loading="lazy"
+          />
+          <figcaption><Icon name="droplet" size={18} /><span><strong>Plumbing fixtures</strong> Clean, carefully fitted details.</span></figcaption>
+        </figure>
+        <figure class="service-photo service-photo--heating" data-reveal="up">
+          <Image
+            class="site-photo"
+            src={plumbingWaterHeater}
+            alt="Wall-mounted water heater with connected pipework"
+            widths={[320, 520, 760]}
+            sizes="(max-width: 800px) 100vw, 30vw"
+            format="webp"
+            quality={82}
+            loading="lazy"
+          />
+          <figcaption><Icon name="pipe" size={18} /><span><strong>Water systems</strong> Practical installations for everyday use.</span></figcaption>
+        </figure>
+        <figure class="service-photo service-photo--electrical" data-reveal="up">
+          <Image
+            class="site-photo"
+            src={electricalDistributionBoard}
+            alt="Large electrical distribution board with organised circuits"
+            widths={[320, 520, 760]}
+            sizes="(max-width: 800px) 100vw, 36vw"
+            format="webp"
+            quality={82}
+            loading="lazy"
+          />
+          <figcaption><Icon name="bolt" size={18} /><span><strong>Electrical systems</strong> Detailed installation and organisation.</span></figcaption>
+        </figure>
       </div>
       <p class="demo-note">Service coverage shown is illustrative and must be confirmed by Aqualux before launch.</p>
     </div>
@@ -99,7 +165,22 @@ import { business, faqs, processSteps, projects, reviews, services } from '../da
 
   <section class="section section--mist anchor-section interactive-surface" id="faqs" data-nav-section data-interactive-surface>
     <div class="container faq-grid">
-      <SectionHeading eyebrow="FAQs" title="Useful answers before you enquire." text="Quick answers about services, quotes and coverage." />
+      <div class="faq-intro">
+        <SectionHeading eyebrow="FAQs" title="Useful answers before you enquire." text="Quick answers about services, quotes and coverage." />
+        <figure class="context-photo context-photo--faq" data-reveal="scale">
+          <Image
+            class="site-photo"
+            src={plumbingShowerEnclosure}
+            alt="Completed tiled shower enclosure with glass screen"
+            widths={[360, 560, 760]}
+            sizes="(max-width: 800px) 100vw, 34vw"
+            format="webp"
+            quality={82}
+            loading="lazy"
+          />
+          <figcaption>Finished plumbing installation</figcaption>
+        </figure>
+      </div>
       <div class="faq-list" data-stagger>
         {faqs.map((faq) => (
           <details name="aqualux-faq" data-reveal="up">
@@ -132,6 +213,19 @@ import { business, faqs, processSteps, projects, reviews, services } from '../da
           <li><div class="icon-tile"><Icon name="facebook" size={23} /></div><div><span>Facebook</span><a href={business.facebookUrl} target="_blank" rel="noopener noreferrer">Visit our page<span class="sr-only"> (opens in a new tab)</span></a></div></li>
           <li><div class="icon-tile"><Icon name="map" size={23} /></div><div><span>Service area</span><strong>{business.serviceArea}</strong></div></li>
         </ul>
+        <figure class="context-photo context-photo--contact" data-reveal="scale">
+          <Image
+            class="site-photo"
+            src={plumbingVanity}
+            alt="Completed bathroom vanity with basin, mirror and storage"
+            widths={[360, 560, 760]}
+            sizes="(max-width: 800px) 100vw, 34vw"
+            format="webp"
+            quality={82}
+            loading="lazy"
+          />
+          <figcaption>Everyday spaces, neatly finished</figcaption>
+        </figure>
       </aside>
       <ContactForm />
     </div>
