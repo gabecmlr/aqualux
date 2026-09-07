@@ -154,6 +154,9 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
     syncSubmitState();
 
     const messageFor = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
+      if (field.id === 'consent' && field.validity.valueMissing) {
+        return 'Please tick the agreement to submit your request.';
+      }
       if (field.validity.valueMissing) return `${field.labels?.[0]?.textContent?.replace('*', '').trim() ?? 'This field'} is required.`;
       if (field.validity.typeMismatch) return 'Enter a valid email address.';
       if (field.validity.tooShort && 'minLength' in field) return `Please enter at least ${field.minLength} characters.`;
