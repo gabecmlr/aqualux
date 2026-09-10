@@ -37,8 +37,7 @@ export interface Review {
   quote: string;
   name: string;
   context: string;
-  rating: 5;
-  demo: true;
+  recommended: true;
 }
 
 export const business = {
@@ -124,28 +123,22 @@ export const projects: Project[] = [
 
 export const reviews: Review[] = [
   {
-    quote:
-      'Replace this with a genuine customer review and obtain permission before publishing it.',
-    name: 'Customer name',
-    context: 'Service and area',
-    rating: 5,
-    demo: true,
+    quote: 'Professional, efficient, and ready to help with a smile.',
+    name: 'James Galea',
+    context: 'Facebook recommendation',
+    recommended: true,
   },
   {
-    quote:
-      'This placeholder shows the intended review length, tone and visual treatment.',
-    name: 'Customer name',
-    context: 'Service and area',
-    rating: 5,
-    demo: true,
+    quote: 'Amazing and efficient service.',
+    name: 'Antonia Taliana',
+    context: 'Facebook recommendation',
+    recommended: true,
   },
   {
-    quote:
-      'Add a verified testimonial here when Aqualux has approved customer feedback to share.',
-    name: 'Customer name',
-    context: 'Service and area',
-    rating: 5,
-    demo: true,
+    quote: 'Very professional service, dedicated team and helpful.',
+    name: 'Malcolm Zammit',
+    context: 'Facebook recommendation',
+    recommended: true,
   },
 ];
 

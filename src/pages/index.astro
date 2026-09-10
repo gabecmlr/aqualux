@@ -143,8 +143,17 @@ import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
       </div>
       <div class="reviews-block" id="reviews">
         <div class="reviews-block__glow" aria-hidden="true"></div>
-        <SectionHeading eyebrow="Customer reviews" title="Good work deserves five-star feedback." text="A more polished preview of how genuine, customer-approved reviews will be presented." align="center" light />
-        <p class="reviews-block__disclaimer" data-reveal="up"><Icon name="shield" size={18} /> Five-star visuals are placeholders until verified reviews are supplied.</p>
+        <SectionHeading eyebrow="Customer reviews" title="Recommended by every Facebook reviewer." text="Recent recommendations shared publicly by Aqualux customers on Facebook." align="center" light />
+        <a
+          class="reviews-block__disclaimer"
+          href={business.facebookReviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-reveal="up"
+          aria-label="View all 8 Aqualux reviews on Facebook (opens in a new tab)"
+        >
+          <Icon name="facebook" size={18} /> 100% recommend Aqualux across 8 public Facebook reviews.
+        </a>
         <div class="review-grid" data-stagger>
           {reviews.map((review, index) => <ReviewCard review={review} featured={index === 1} />)}
         </div>
