@@ -1,0 +1,117 @@
+---
+import Icon from './Icon.astro';
+import ReviewCard from './ReviewCard.astro';
+import type { Review } from '../data/site';
+
+interface Props {
+  reviews: Review[];
+}
+
+const { reviews } = Astro.props;
+const initialVisibleCount = Math.min(3, reviews.length);
+---
+
+<div class="review-carousel" data-review-carousel data-reveal="up">
+  <div class="review-carousel__controls">
+    <p class="review-carousel__status" aria-live="polite" aria-atomic="true" data-review-status>
+      Showing reviews 1–{initialVisibleCount} of {reviews.length}
+    </p>
+    <div class="review-carousel__buttons" aria-label="Review carousel controls">
+      <button class="review-carousel__button" type="button" data-review-previous aria-label="Show previous reviews" disabled>
+        <Icon name="arrow" size={20} class="review-carousel__arrow--previous" />
+      </button>
+      <button class="review-carousel__button" type="button" data-review-next aria-label="Show next reviews">
+        <Icon name="arrow" size={20} />
+      </button>
+    </div>
+  </div>
+  <div
+    class="review-carousel__viewport"
+    data-review-viewport
+    role="region"
+    aria-label="Customer reviews"
+    tabindex="0"
+  >
+    <ul class="review-carousel__track" data-review-track>
+      {reviews.map((review, index) => (
+        <li class="review-carousel__slide" aria-label={`Review ${index + 1} of ${reviews.length}`}>
+          <ReviewCard review={review} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLElement>('[data-review-carousel]').forEach((carousel) => {
+    const viewport = carousel.querySelector<HTMLElement>('[data-review-viewport]');
+    const track = carousel.querySelector<HTMLElement>('[data-review-track]');
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.review-carousel__slide'));
+    const previous = carousel.querySelector<HTMLButtonElement>('[data-review-previous]');
+    const next = carousel.querySelector<HTMLButtonElement>('[data-review-next]');
+    const status = carousel.querySelector<HTMLElement>('[data-review-status]');
+
+    if (!viewport || !track || !slides.length || !previous || !next || !status) return;
+
+    let activeIndex = 0;
+    let visibleCount = 1;
+    let scrollFrame = 0;
+
+    const getVisibleCount = () => {
+      const slideWidth = slides[0]?.getBoundingClientRect().width ?? viewport.clientWidth;
+      const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 0;
+      return Math.max(1, Math.min(slides.length, Math.round((viewport.clientWidth + gap) / (slideWidth + gap))));
+    };
+
+    const syncControls = () => {
+      visibleCount = getVisibleCount();
+      const maximumStart = Math.max(0, slides.length - visibleCount);
+      activeIndex = Math.min(activeIndex, maximumStart);
+      previous.disabled = activeIndex === 0;
+      next.disabled = activeIndex >= maximumStart;
+      const first = activeIndex + 1;
+      const last = Math.min(slides.length, activeIndex + visibleCount);
+      status.textContent = `Showing reviews ${first}–${last} of ${slides.length}`;
+    };
+
+    const goTo = (index: number) => {
+      visibleCount = getVisibleCount();
+      activeIndex = Math.max(0, Math.min(index, slides.length - visibleCount));
+      viewport.scrollTo({
+        left: slides[activeIndex]?.offsetLeft ?? 0,
+        behavior: reduceMotion.matches ? 'auto' : 'smooth',
+      });
+      syncControls();
+    };
+
+    previous.addEventListener('click', () => goTo(activeIndex - 1));
+    next.addEventListener('click', () => goTo(activeIndex + 1));
+    viewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goTo(activeIndex - 1);
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goTo(activeIndex + 1);
+      }
+    });
+    viewport.addEventListener('scroll', () => {
+      if (scrollFrame) cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => {
+        const step = slides[1]?.offsetLeft - slides[0]?.offsetLeft || viewport.clientWidth;
+        activeIndex = Math.round(viewport.scrollLeft / step);
+        syncControls();
+      });
+    }, { passive: true });
+
+    const resizeObserver = new ResizeObserver(() => {
+      syncControls();
+      viewport.scrollTo({ left: slides[activeIndex]?.offsetLeft ?? 0, behavior: 'auto' });
+    });
+    resizeObserver.observe(viewport);
+    syncControls();
+  });
+</script>

@@ -1,33 +1,29 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import type { Project } from '../data/site';
-interface Props { project: Project; }
-const { project } = Astro.props;
+interface Props { project: Project; featured?: boolean; }
+const { project, featured = false } = Astro.props;
 ---
 
-<article class="project-card" data-reveal="up" data-spotlight>
-  <div class="project-card__media">
-    <figure>
-      {project.beforeImage ? (
-        <img src={project.beforeImage} alt={`${project.title} before work`} width="640" height="480" loading="lazy" />
-      ) : (
-        <div class="proof-placeholder"><Icon name="spark" size={30} /><span>Real before photo</span></div>
-      )}
-      <figcaption>Before</figcaption>
-    </figure>
-    <figure>
-      {project.afterImage ? (
-        <img src={project.afterImage} alt={`${project.title} after work`} width="640" height="480" loading="lazy" />
-      ) : (
-        <div class="proof-placeholder proof-placeholder--after"><Icon name="check" size={30} /><span>Real after photo</span></div>
-      )}
-      <figcaption>After</figcaption>
-    </figure>
-  </div>
+<article class:list={['project-card', { 'project-card--featured': featured }]} data-reveal="up" data-spotlight>
+  <figure class="project-card__media">
+    <Image
+      src={project.image}
+      alt={project.imageAlt}
+      widths={[420, 640, 900, 1280]}
+      sizes={featured ? '(max-width: 1050px) 100vw, 62vw' : '(max-width: 1050px) 100vw, 50vw'}
+      format="webp"
+      quality={84}
+      loading="lazy"
+      style={`object-position: ${project.imagePosition ?? 'center'}`}
+    />
+    <figcaption>{project.category}</figcaption>
+  </figure>
   <div class="project-card__body">
-    <div><span class="demo-badge">Placeholder project</span><p class="project-card__category">{project.category}</p></div>
+    <p class="project-card__category">Selected project</p>
     <h3>{project.title}</h3>
     <p>{project.summary}</p>
-    <p class="project-card__result"><Icon name="check" size={18} /><span>{project.result}</span></p>
+    <p class="project-card__result"><Icon name="check" size={18} /><span>{project.detail}</span></p>
   </div>
 </article>

@@ -5,7 +5,7 @@ import Icon from '../components/Icon.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import ReviewCard from '../components/ReviewCard.astro';
+import ReviewCarousel from '../components/ReviewCarousel.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { business, faqs, processSteps, projects, reviews, services } from '../data/site';
 import electricalControlPanel from '../assets/work/electrical-control-panel.jpeg';
@@ -118,7 +118,6 @@ import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
           <figcaption><Icon name="bolt" size={18} /><span><strong>Electrical systems</strong> Detailed installation and organisation.</span></figcaption>
         </figure>
       </div>
-      <p class="demo-note">Service coverage shown is illustrative and must be confirmed by Aqualux before launch.</p>
     </div>
     <div class="container process-band" data-reveal="up">
       <div class="process-band__heading">
@@ -133,30 +132,14 @@ import plumbingWaterHeater from '../assets/work/plumbing-water-heater.jpeg';
 
   <section class="section anchor-section interactive-surface" id="work" data-nav-section data-interactive-surface>
     <div class="container">
-      <SectionHeading eyebrow="Our work" title="Proof you can see. Feedback you can trust." text="Before-and-after projects and approved customer reviews will show the standard of Aqualux work in one place." />
-      <div class="evidence-notice" data-reveal="up">
-        <Icon name="shield" size={25} />
-        <div><strong>Honest placeholders</strong><p>The entries below are layout examples, not claims of completed work. Replace every photo, fact and review with customer-approved evidence before launch.</p></div>
-      </div>
+      <SectionHeading eyebrow="Our work" title="Installations, clearly presented." text="A closer look at selected plumbing and electrical projects, shown as individual pieces of work." />
       <div class="project-list" data-stagger>
-        {projects.map((project) => <ProjectCard project={project} />)}
+        {projects.map((project, index) => <ProjectCard project={project} featured={index === 0} />)}
       </div>
       <div class="reviews-block" id="reviews">
         <div class="reviews-block__glow" aria-hidden="true"></div>
-        <SectionHeading eyebrow="Customer reviews" title="Recommended by every Facebook reviewer." text="Recent recommendations shared publicly by Aqualux customers on Facebook." align="center" light />
-        <a
-          class="reviews-block__disclaimer"
-          href={business.facebookReviewsUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-reveal="up"
-          aria-label="View all 8 Aqualux reviews on Facebook (opens in a new tab)"
-        >
-          <Icon name="facebook" size={18} /> 100% recommend Aqualux across 8 public Facebook reviews.
-        </a>
-        <div class="review-grid" data-stagger>
-          {reviews.map((review, index) => <ReviewCard review={review} featured={index === 1} />)}
-        </div>
+        <SectionHeading eyebrow="Customer reviews" title="What customers say about Aqualux." text="Browse recommendations shared publicly by Aqualux customers on Facebook." align="center" light />
+        <ReviewCarousel reviews={reviews} />
         <div class="center-action" data-reveal="up">
           <a
             class="button button--primary"

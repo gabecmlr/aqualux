@@ -1,3 +1,8 @@
+import type { ImageMetadata } from 'astro';
+import electricalOutdoorLighting from '../assets/work/electrical-outdoor-lighting.jpg';
+import plumbingDistributionSystem from '../assets/work/plumbing-distribution-system.jpeg';
+import plumbingRooftopWaterStorage from '../assets/work/plumbing-rooftop-water-storage.jpg';
+
 export type IconName =
   | 'arrow'
   | 'bolt'
@@ -27,10 +32,10 @@ export interface Project {
   title: string;
   category: string;
   summary: string;
-  result: string;
-  demo: true;
-  beforeImage?: string;
-  afterImage?: string;
+  detail: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  imagePosition?: string;
 }
 
 export interface Review {
@@ -52,7 +57,6 @@ export const business = {
   serviceArea: 'Malta and Gozo',
   description:
     'Dependable electrical and plumbing services for homes, landlords and local businesses.',
-  verifiedForStructuredData: false,
 } as const;
 
 export const navigation = [
@@ -75,7 +79,7 @@ export const services: Service[] = [
       'Consumer unit upgrades',
       'Rewiring and new installations',
       'Safety inspections and testing',
-      'Commercial maintenance',
+      'Commercial and domestic maintenance and installations',
     ],
   },
   {
@@ -89,41 +93,59 @@ export const services: Service[] = [
       'Pipework repairs and upgrades',
       'Kitchen and bathroom plumbing',
       'Water pressure troubleshooting',
-      'Commercial maintenance',
+      'Commercial and domestic maintenance and installations',
     ],
   },
 ];
 
 export const projects: Project[] = [
   {
-    title: 'Kitchen lighting refresh',
-    category: 'Electrical · Residential',
+    title: 'Multi-point plumbing installation',
+    category: 'Plumbing · Distribution systems',
     summary:
-      'Replace this copy with the real brief, constraints and work completed for an Aqualux customer.',
-    result: 'Add the measurable or practical outcome once the project is verified.',
-    demo: true,
+      'An extensive wall-mounted network of neatly routed pipework, valves and individual metering points.',
+    detail:
+      'Visible meters, isolation valves and grouped runs keep the installation clear and accessible.',
+    image: plumbingDistributionSystem,
+    imageAlt:
+      'Large wall-mounted plumbing installation with organised pipe runs, meters and isolation valves',
+    imagePosition: 'center',
   },
   {
-    title: 'Pipework repair',
-    category: 'Plumbing · Residential',
+    title: 'Rooftop water storage system',
+    category: 'Plumbing · Water systems',
     summary:
-      'Use this space to explain the original problem and how the genuine repair was approached.',
-    result: 'Add the confirmed result and customer-approved project details here.',
-    demo: true,
+      'Four roof-mounted water tanks connected through orderly supply pipework and individual valves.',
+    detail:
+      'The grouped layout keeps tank connections visible and provides straightforward access for inspection.',
+    image: plumbingRooftopWaterStorage,
+    imageAlt:
+      'Four rooftop water storage tanks connected with visible white pipework and isolation valves',
+    imagePosition: 'center 43%',
   },
   {
-    title: 'Workspace upgrade',
-    category: 'Electrical & plumbing · Commercial',
+    title: 'Outdoor pool lighting',
+    category: 'Electrical · Exterior lighting',
     summary:
-      'Replace with an approved commercial case study, including the scope and site requirements.',
-    result: 'Add the verified business outcome after the work is complete.',
-    demo: true,
+      'Exterior lighting arranged around a pool area for visibility and atmosphere after dark.',
+    detail:
+      'Bright perimeter lighting is complemented by warm accents across the surrounding stonework.',
+    image: electricalOutdoorLighting,
+    imageAlt:
+      'Illuminated outdoor pool area at night with perimeter floodlights and warm stone-wall lighting',
+    imagePosition: 'center',
   },
 ];
 
 export const reviews: Review[] = [
   {
-    quote: 'Professional, efficient, and ready to help with a smile.',
+    quote: 'Smart and efficient.',
+    name: 'James Mallia',
+    context: 'Facebook recommendation',
+    recommended: true,
+  },
+  {
+    quote: 'Professional, efficient.',
     name: 'James Galea',
     context: 'Facebook recommendation',
     recommended: true,
@@ -135,8 +157,38 @@ export const reviews: Review[] = [
     recommended: true,
   },
   {
-    quote: 'Very professional service, dedicated team and helpful.',
+    quote: 'Professional service.',
     name: 'Malcolm Zammit',
+    context: 'Facebook recommendation',
+    recommended: true,
+  },
+  {
+    quote: 'Excellent service.',
+    name: 'Charmaine Farrugia',
+    context: 'Facebook recommendation',
+    recommended: true,
+  },
+  {
+    quote: 'Recommended.',
+    name: 'Joseph Bugelli',
+    context: 'Facebook recommendation',
+    recommended: true,
+  },
+  {
+    quote: '100% recommended.',
+    name: 'Isaac Cefai',
+    context: 'Facebook recommendation',
+    recommended: true,
+  },
+  {
+    quote: 'Top of my list!',
+    name: 'Mark Borg Mangion',
+    context: 'Facebook recommendation',
+    recommended: true,
+  },
+  {
+    quote: 'Nothing but words of praise.',
+    name: 'Joel Chan',
     context: 'Facebook recommendation',
     recommended: true,
   },
@@ -146,12 +198,12 @@ export const faqs = [
   {
     question: 'Do you handle both electrical and plumbing work?',
     answer:
-      'Yes. Aqualux is presented as a single point of contact for both trades. The exact services offered should be confirmed before launch.',
+      'Yes. Aqualux provides both electrical and plumbing services, giving homes, landlords and businesses one dependable point of contact for both trades.',
   },
   {
     question: 'Do you work with homes and businesses?',
     answer:
-      'Yes. The website covers homeowners, landlords and light-commercial customers. Share a few details in the quote form so the right work can be discussed.',
+      'Yes. Aqualux works with homeowners, landlords and local businesses. Share a few details in the quote form so the right work can be discussed.',
   },
   {
     question: 'How does the quote process work?',

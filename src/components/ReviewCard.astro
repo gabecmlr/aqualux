@@ -2,12 +2,9 @@
 import Icon from './Icon.astro';
 import type { Review } from '../data/site';
 
-interface Props {
-  review: Review;
-  featured?: boolean;
-}
+interface Props { review: Review; }
 
-const { review, featured = false } = Astro.props;
+const { review } = Astro.props;
 const initials = review.name
   .split(/\s+/)
   .filter(Boolean)
@@ -16,7 +13,7 @@ const initials = review.name
   .join('');
 ---
 
-<figure class:list={['review-card', { 'review-card--featured': featured }]} data-reveal="up">
+<figure class="review-card">
   <div class="review-card__surface" data-spotlight>
     <div class="review-card__topline">
       <span class="review-source-badge"><Icon name="facebook" size={15} /> Facebook</span>
@@ -30,6 +27,6 @@ const initials = review.name
       <span class="review-card__avatar" aria-hidden="true">{initials || 'AQ'}</span>
       <span class="review-card__identity"><strong>{review.name}</strong><span>{review.context}</span></span>
     </figcaption>
-    <p class="review-card__rating-note">Excerpt from a public Facebook recommendation</p>
+    <p class="review-card__rating-note">Public Facebook recommendation</p>
   </div>
 </figure>

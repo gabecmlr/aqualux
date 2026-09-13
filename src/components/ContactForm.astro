@@ -13,8 +13,8 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
 
   {!configured && (
     <div class="config-notice" role="status">
-      <strong>Form delivery needs configuration.</strong>
-      <span>Add the Yahoo app password to <code>YAHOO_SMTP_APP_PASSWORD</code> to enable submissions.</span>
+      <strong>Online quote requests are temporarily unavailable.</strong>
+      <span>Please contact Aqualux by phone, email or WhatsApp.</span>
     </div>
   )}
 
@@ -119,7 +119,7 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
 
     <div class="form-actions">
       <button class="button button--primary" type="submit" disabled data-submit>
-        <span data-submit-label>{configured ? 'Send quote request' : 'Form not configured'}</span>
+        <span data-submit-label>{configured ? 'Send quote request' : 'Contact Aqualux directly'}</span>
         <span class="button-spinner" aria-hidden="true" hidden></span>
       </button>
       <p>Agree to the privacy statement above to enable sending. Required fields are marked with an asterisk.</p>
@@ -188,7 +188,7 @@ const configured = smtpUser === 'aqualux1@ymail.com' && smtpPassword.length > 0;
       if (!configured) {
         event.preventDefault();
         status.className = 'form-status form-status--error';
-        status.textContent = 'Email delivery is not configured yet. Add the Yahoo app password before launch.';
+        status.textContent = 'Online quote requests are temporarily unavailable. Please contact Aqualux directly.';
         return;
       }
 
